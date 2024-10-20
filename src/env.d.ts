@@ -6,7 +6,7 @@
 
 type KVNamespace = import('@cloudflare/workers-types').KVNamespace;
 type ENV = {
-  SMTP: KVNamespace;
+  LOOPS: KVNamespace;
 };
 
 // use a default runtime configuration (advanced mode).

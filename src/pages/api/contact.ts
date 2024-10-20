@@ -1,6 +1,5 @@
 import type { APIRoute } from 'astro';
-import nodemailer from 'nodemailer';
-import type SMTPTransport from 'nodemailer/lib/smtp-transport';
+import { LoopsClient } from 'loops';
 export const prerender = false;
 
 export const POST: APIRoute = async ({ request, locals }) => {
@@ -24,28 +23,34 @@ export const POST: APIRoute = async ({ request, locals }) => {
     return new Response(JSON.stringify({ errors: errors }), { status: 400 });
   }
 
-  const smtpKv = locals.runtime.env.SMTP;
-  const smtpHost = await smtpKv.get('host');
-  const smtpUser = await smtpKv.get('user');
-  const smtpPassword = await smtpKv.get('password');
-  const toEmail = await smtpKv.get('toEmail');
+  const loopsKv = locals.runtime.env.LOOPS;
+  const loopsApiKey = await loopsKv.get('api_key');
+  const loopsEmail = await loopsKv.get('email');
+  const loopsTransactionalId = await loopsKv.get('transactionalId');
 
   try {
-    const transporter = nodemailer.createTransport({
-      host: smtpHost,
-      port: 465,
-      secure: true,
-      auth: {
-        user: smtpUser,
-        pass: smtpPassword,
+    const loops = new LoopsClient(loopsApiKey as string);
+
+    const resp = await loops.sendTransactionalEmail({
+      transactionalId: loopsTransactionalId as string,
+      email: loopsEmail as string,
+      dataVariables: {
+        message: message as string,
+        from: name as string,
+        reply: email as string,
       },
-    } as SMTPTransport.Options);
-    await transporter.sendMail({
-      from: `"${name}" <${email}>`,
-      to: toEmail as string,
-      subject: 'Website Contact Me Form',
-      text: message as string,
     });
+    if (!resp.success) {
+      console.error(JSON.stringify(resp));
+      return new Response(
+        JSON.stringify({
+          errors: {
+            submit: 'Unable to send message. Please try again in a few moments.',
+          },
+        }),
+        { status: 500 }
+      );
+    }
   } catch (err) {
     console.error(err);
     return new Response(

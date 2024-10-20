@@ -2,5 +2,5 @@ compatibility_flags = [ "nodejs_compat" ]
 compatibility_date = "2024-09-23"
 
 kv_namespaces = [
-  { binding = "SMTP", id = "fastmail-smtp" },
+  { binding = "LOOPS", id = "loops" },
 ]
