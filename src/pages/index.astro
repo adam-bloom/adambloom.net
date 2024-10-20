@@ -1,0 +1,101 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+
+import Features from '~/components/widgets/Features.astro';
+import Header from '~/components/widgets/Header.astro';
+import Hero from '~/components/widgets/HeroText.astro';
+import Steps from '~/components/widgets/Steps.astro';
+---
+
+<Layout>
+  <Fragment slot="header">
+    <Header
+      links={[
+        { text: 'Home', href: '/' },
+        { text: 'Experience', href: '#experience' },
+      ]}
+      isSticky
+      showToggleTheme
+    />
+  </Fragment>
+
+  <Hero title="Adam Bloom">
+    <Fragment slot="subtitle">
+      Software Engineer, Puzzle Solver <br />
+      <br />
+      I bring years of experience solving complex puzzles across a wide variety of software disciplines.
+    </Fragment>
+  </Hero>
+
+  <Steps
+    id="experience"
+    title="Work experience"
+    items={[
+      {
+        title:
+          'Senior Software Engineer <br /> <span class="font-normal">AgileMD</span> <br /> <span class="text-sm font-normal">2022 - Present</span>',
+        icon: 'tabler:briefcase',
+      },
+      {
+        title:
+          'Ground Processing Software Engineer <br /> <span class="font-normal">Spire Global</span> <br /> <span class="text-sm font-normal">2020 - 2022</span>',
+        icon: 'tabler:briefcase',
+      },
+      {
+        title:
+          'Software Engineer <br /> <span class="font-normal">Viasat</span> <br /> <span class="text-sm font-normal">2016 - 2020</span>',
+        icon: 'tabler:briefcase',
+      },
+    ]}
+    classes={{ container: 'max-w-3xl' }}
+  />
+
+  <Steps
+    id="resume"
+    title="Education"
+    items={[
+      {
+        title: `Master of Electrical Engineering <br /> <span class="font-normal">Rice University</span> <br /> <span class="text-sm font-normal">2015</span>`,
+        icon: 'tabler:school',
+      },
+      {
+        title: `Bachelor of Science in Electrical Engineering <br /> <span class="font-normal">Rice University</span> <br /> <span class="text-sm font-normal">2015</span>`,
+        icon: 'tabler:school',
+      },
+    ]}
+    classes={{ container: 'max-w-3xl' }}
+  />
+
+  <Features
+    title="Skills"
+    subtitle="I have a breadth of technical expertise"
+    columns={3}
+    defaultIcon="tabler:point-filled"
+    items={[
+      {
+        title: 'Data pipelines and processing',
+        description: 'Both streaming and batch processing',
+      },
+      {
+        title: 'Monitoring and Observability',
+        description: 'Experience implementing site reliability best practices',
+      },
+      {
+        title: 'Continuous Integration and Delivery',
+        description: 'Streamline software testing and deployment',
+      },
+      {
+        title: 'Cloud Infrastructure',
+        description: 'Experienced in AWS and Kubernetes',
+      },
+      {
+        title: 'Agile Scrum Methodologies',
+        description: 'Product Owner and Scrum Master Certifications',
+      },
+      {
+        title: 'Leadership and Mentorship',
+        description: 'Coaching and developing software engineers',
+      },
+    ]}
+  />
+</Layout>
