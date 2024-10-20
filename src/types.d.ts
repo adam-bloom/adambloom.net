@@ -155,6 +155,7 @@ export interface Form {
   disclaimer?: Disclaimer;
   button?: string;
   description?: string;
+  method?: string;
 }
 
 // WIDGETS
@@ -188,3 +189,5 @@ export interface Steps extends Omit<Headline, 'classes'>, Widget {
   image?: string | Image;
   isReversed?: boolean;
 }
+
+export interface Contact extends Omit<Headline, 'classes'>, Form, Widget {}

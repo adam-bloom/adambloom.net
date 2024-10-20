@@ -1,6 +1,7 @@
 ---
 import Layout from '~/layouts/PageLayout.astro';
 
+import Contact from '~/components/widgets/Contact.astro';
 import Features from '~/components/widgets/Features.astro';
 import Header from '~/components/widgets/Header.astro';
 import Hero from '~/components/widgets/HeroText.astro';
@@ -13,6 +14,7 @@ import Steps from '~/components/widgets/Steps.astro';
       links={[
         { text: 'Home', href: '/' },
         { text: 'Experience', href: '#experience' },
+        { text: 'Contact', href: '#contact' },
       ]}
       isSticky
       showToggleTheme
@@ -97,5 +99,26 @@ import Steps from '~/components/widgets/Steps.astro';
         description: 'Coaching and developing software engineers',
       },
     ]}
+  />
+
+  <Contact
+    id="contact"
+    title="Contact Me"
+    inputs={[
+      {
+        type: 'text',
+        name: 'name',
+        label: 'Your Name',
+      },
+      {
+        type: 'email',
+        name: 'email',
+        label: 'Email',
+      },
+    ]}
+    textarea={{
+      label: 'Message',
+    }}
+    button={'Send message'}
   />
 </Layout>

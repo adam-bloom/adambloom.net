@@ -17,6 +17,8 @@ import { lazyImagesRehypePlugin, readingTimeRemarkPlugin, responsiveTablesRehype
 
 import cloudflare from '@astrojs/cloudflare';
 
+import preact from '@astrojs/preact';
+
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const hasExternalScripts = false;
@@ -24,7 +26,7 @@ const whenExternalScripts = (items: (() => AstroIntegration) | (() => AstroInteg
   hasExternalScripts ? (Array.isArray(items) ? items.map((item) => item()) : [items()]) : [];
 
 export default defineConfig({
-  output: 'server',
+  output: 'hybrid',
 
   integrations: [
     tailwind({
@@ -37,13 +39,11 @@ export default defineConfig({
         tabler: ['*'],
       },
     }),
-
     ...whenExternalScripts(() =>
       partytown({
         config: { forward: ['dataLayer.push'] },
       })
     ),
-
     compress({
       CSS: true,
       HTML: {
@@ -56,10 +56,10 @@ export default defineConfig({
       SVG: false,
       Logger: 1,
     }),
-
     astrowind({
       config: './src/config.yaml',
     }),
+    preact(),
   ],
 
   image: {
@@ -83,5 +83,6 @@ export default defineConfig({
     platformProxy: {
       enabled: true,
     },
+    imageService: 'passthrough',
   }),
 });
